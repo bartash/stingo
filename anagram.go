@@ -21,16 +21,11 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	i := 0;
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
 		i++;
-		if (i > 20) {
-			break;
+		if (i % 1000 == 0) {
+			fmt.Println(scanner.Text())
 		}
 	}
-
-	//if err := scanner.Err(); err != nil {
-	//	log.Fatal(err)
-	//}
-
+	fmt.Printf("Total number of strings was %v", i)
 	check(scanner.Err())
 }

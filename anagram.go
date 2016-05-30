@@ -19,13 +19,14 @@ func main() {
 	check(err)
 
 	scanner := bufio.NewScanner(file)
-	i := 0;
+	count := 0;
 	for scanner.Scan() {
-		i++;
-		if (i % 1000 == 0) {
-			fmt.Println(scanner.Text())
+		count++;
+		text := scanner.Text()
+		if (count % 1000 == 0) {
+			fmt.Println(text)
 		}
 	}
-	fmt.Printf("Total number of strings was %v", i)
+	fmt.Printf("Total number of strings was %v", count)
 	check(scanner.Err())
 }

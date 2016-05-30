@@ -5,7 +5,6 @@ import (
 	"os"
 	"bufio"
 	"github.com/bartash/stingo/runesort"
-	"bytes"
 )
 
 func check(e error) {

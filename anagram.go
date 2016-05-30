@@ -14,6 +14,7 @@ func check(e error) {
 	}
 }
 
+// find simple anagrams
 func main() {
 	if (len(os.Args) < 2) {
 		panic("usage: anagram word")
@@ -44,5 +45,5 @@ func main() {
 	}
 
 
-	
+
 }

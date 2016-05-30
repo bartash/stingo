@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"bufio"
+	"fmt"
 	"github.com/bartash/stingo/runesort"
+	"os"
+	"strings"
 )
 
 func check(e error) {
@@ -15,22 +16,21 @@ func check(e error) {
 
 // find simple anagrams
 func main() {
-	if (len(os.Args) < 2) {
+	if len(os.Args) < 2 {
 		panic("usage: anagram word")
 	}
-	target := os.Args[1]
+	target := strings.ToLower(os.Args[1])
 	sortedTarget := runesort.SortString(target)
 	fmt.Printf("Anagrams of %v\n", target)
-
 
 	file, err := os.Open("c:/cygwin64/usr/dict/words")
 	check(err)
 
 	scanner := bufio.NewScanner(file)
-	count := 0;
+	count := 0
 	sortToOriginal := make(map[string][]string)
 	for scanner.Scan() {
-		count++;
+		count++
 		text := scanner.Text()
 		sortedText := runesort.SortString(text)
 		sortToOriginal[sortedText] = append(sortToOriginal[sortedText], text)
@@ -38,11 +38,9 @@ func main() {
 	fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
 	check(scanner.Err())
 
-	answers := sortToOriginal[sortedTarget];
+	answers := sortToOriginal[sortedTarget]
 	for _, element := range answers {
 		fmt.Printf("answer: %v \n", element)
 	}
-
-
 
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"bufio"
+	"github.com/bartash/stingo/runesort"
 )
 
 func check(e error) {
@@ -23,8 +24,9 @@ func main() {
 	for scanner.Scan() {
 		count++;
 		text := scanner.Text()
+		sortedText := runesort.SortString(text)
 		if (count % 1000 == 0) {
-			fmt.Println(text)
+			fmt.Printf("text %v maps to %v\n", text, sortedText)
 		}
 	}
 	fmt.Printf("Total number of strings was %v", count)

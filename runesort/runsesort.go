@@ -1,4 +1,4 @@
-package main
+package runesort
 
 // Code from https://stackoverflow.com/questions/22688651/golang-how-to-sort-string-or-byte
 

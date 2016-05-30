@@ -14,7 +14,12 @@ func check(e error) {
 }
 
 func main() {
-	fmt.Printf("Anagrams....\n")
+	if (len(os.Args) < 2) {
+		panic("usage: anagram word")
+	}
+	arg := os.Args[1]
+	fmt.Printf("Anagrams of %v\n", arg)
+
 
 	file, err := os.Open("c:/cygwin64/usr/dict/words")
 	check(err)
@@ -27,7 +32,7 @@ func main() {
 		text := scanner.Text()
 		sortedText := runesort.SortString(text)
 		sortToOriginal[sortedText] = text;
-		if (count % 1000 == 0) {
+		if (count % 10000 == 0) {
 			fmt.Printf("text %v maps to %v\n", text, sortedText)
 		}
 	}

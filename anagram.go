@@ -5,6 +5,7 @@ import (
 	"os"
 	"bufio"
 	"github.com/bartash/stingo/runesort"
+	"bytes"
 )
 
 func check(e error) {
@@ -41,4 +42,17 @@ func main() {
 	for _, element := range answers {
 		fmt.Printf("answer: %v \n", element)
 	}
+
+
+	sort2ToOriginal := make(map[string] bool)
+	for key1, _ := range sortToOriginal {
+		for key2, _ := range sortToOriginal {
+			var buffer bytes.Buffer
+			buffer.WriteString(key1)
+			buffer.WriteString(key2)
+			sorted2Text := runesort.SortString(buffer.String());
+			sort2ToOriginal[sorted2Text] = true;
+		}
+	}
+	fmt.Printf("Total number of strings in double map %v\n", len(sort2ToOriginal))
 }

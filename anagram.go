@@ -21,14 +21,16 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	count := 0;
+	sortToOriginal := make(map[string]string)
 	for scanner.Scan() {
 		count++;
 		text := scanner.Text()
 		sortedText := runesort.SortString(text)
+		sortToOriginal[sortedText] = text;
 		if (count % 1000 == 0) {
 			fmt.Printf("text %v maps to %v\n", text, sortedText)
 		}
 	}
-	fmt.Printf("Total number of strings was %v", count)
+	fmt.Printf("Total number of strings was %v map contains %v", count, len(sortToOriginal))
 	check(scanner.Err())
 }

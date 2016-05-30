@@ -17,8 +17,9 @@ func main() {
 	if (len(os.Args) < 2) {
 		panic("usage: anagram word")
 	}
-	arg := os.Args[1]
-	fmt.Printf("Anagrams of %v\n", arg)
+	target := os.Args[1]
+	sortedTarget := runesort.SortString(target)
+	fmt.Printf("Anagrams of %v\n", target)
 
 
 	file, err := os.Open("c:/cygwin64/usr/dict/words")
@@ -26,16 +27,18 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	count := 0;
-	sortToOriginal := make(map[string]string)
+	sortToOriginal := make(map[string][]string)
 	for scanner.Scan() {
 		count++;
 		text := scanner.Text()
 		sortedText := runesort.SortString(text)
-		sortToOriginal[sortedText] = text;
-		if (count % 10000 == 0) {
-			fmt.Printf("text %v maps to %v\n", text, sortedText)
-		}
+		sortToOriginal[sortedText] = append(sortToOriginal[sortedText], text)
 	}
-	fmt.Printf("Total number of strings was %v map contains %v", count, len(sortToOriginal))
+	fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
 	check(scanner.Err())
+
+	answers := sortToOriginal[sortedTarget];
+	for _, element := range answers {
+		fmt.Printf("answer: %v \n", element)
+	}
 }

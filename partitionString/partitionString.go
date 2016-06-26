@@ -11,12 +11,14 @@ type Pair struct {
 type PartitionString struct {
 	n    int  // FIXME should 64 bits and this limits the strings we can use
 	seed string
+	max int
 }
 
 func NewPartitionString(s string) * PartitionString {
 	p := new(PartitionString)
 	p.n = 0;
 	p.seed = s
+	p.max = int(math.Pow(2, float64(len(s))))
 	return p;
 }
 
@@ -24,9 +26,9 @@ func NewPartitionString(s string) * PartitionString {
 func (p * PartitionString) Next() *Pair {
 	pair := new(Pair)
 	stringLength := len(p.seed)
-	max := int(math.Pow(2, float64(stringLength))) // should be done in "constructor"
+
 	// fmt.Printf("max=%v n=%v\n", max, p.n)
-	if p.n >= max {
+	if p.n >= p.max {
 		// need to check for off by one and other logic errors
 		return nil
 	}

@@ -9,7 +9,7 @@ type Pair struct {
 }
 
 type PartitionString struct {
-	n    int
+	n    int  // FIXME should 64 bits and this limits the strings we can use
 	seed string
 }
 
@@ -26,5 +26,10 @@ func (p PartitionString) Next() *Pair {
 
 	p.n++
 	return pair
+}
+
+func isBitSet(n int, pos uint) bool {
+	val := n & (1 << pos)
+	return (val > 0)
 }
 

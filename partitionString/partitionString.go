@@ -5,7 +5,14 @@ import (
 )
 
 type Pair struct {
-	first, second string
+	First, Second string
+}
+
+func NewPair(first string, second string) * Pair {
+	p := new(Pair)
+	p.First = first
+	p.Second = second
+	return p
 }
 
 type PartitionString struct {
@@ -38,9 +45,9 @@ func (p * PartitionString) Next() *Pair {
 		c := string(p.seed[i])
 		// fmt.Printf("i=%v n=%v\n", i, p.n)
 		if isBitSet(p.n, uint(i)) {
-			pair.first += c
+			pair.First += c
 		} else {
-			pair.second += c
+			pair.Second += c
 		}
 	}
 

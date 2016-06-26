@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/bartash/stingo/runesort"
+	"github.com/bartash/stingo/partitionString"
 	"os"
 	"strings"
 )
@@ -43,4 +44,29 @@ func main() {
 		fmt.Printf("answer: %v \n", element)
 	}
 
+	second := partitionString.NewPartitionString(target)
+	allAnswers := make(map[partitionString.Pair]bool)
+	pair := second.Next()
+	for pair != nil {
+		// fmt.Printf("got pair '%v' & '%v'\n", pair.First, pair.Second)
+		sortedFirst := runesort.SortString(pair.First)
+		sortedSecond := runesort.SortString(pair.Second)
+
+		sortedFirstAnswers := sortToOriginal[sortedFirst]
+		sortedSecondAnswers := sortToOriginal[sortedSecond]
+
+		if len(sortedFirstAnswers) > 0 && len (sortedSecondAnswers) > 0 {
+			for _, element := range sortedFirstAnswers {
+				for _, element2 := range sortedSecondAnswers {
+					pair := partitionString.NewPair(element, element2)
+					allAnswers[*pair] = true
+				}
+			}
+		}
+
+		pair = second.Next();
+	}
+	for key, _ := range allAnswers {
+		fmt.Printf("%v %v\n", key.First, key.Second)
+	}
 }

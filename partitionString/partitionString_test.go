@@ -11,7 +11,7 @@ func TestPartitionString(t *testing.T) {
 	for pair != nil {
 		pair = second.Next();
 		if pair != nil {
-			fmt.Printf("got pair '%v' & '%v'\n", pair.first, pair.second)
+			fmt.Printf("got pair '%v' & '%v'\n", pair.First, pair.Second)
 		} else {
 			fmt.Printf("got nil return\n")
 		}

@@ -15,7 +15,7 @@ type PartitionString struct {
 }
 
 
-func (p PartitionString) Next() *Pair {
+func (p * PartitionString) Next() *Pair {
 	pair := new(Pair)
 	stringLength := len(p.seed)
 	max := int(math.Pow(2, float64(stringLength))) // should be done in "constructor"

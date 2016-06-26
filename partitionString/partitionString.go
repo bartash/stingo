@@ -25,11 +25,11 @@ func (p PartitionString) Next() *Pair {
 
 	// treat n as a binary number to decide which characters of seed are in first string of pair
 	for i := 0; i < stringLength; i++ {
-		c := p.seed[i]
-		if isBitSet(p.n, i) {
-			pair.first = append(pair.first, c)
+		c := string(p.seed[i])
+		if isBitSet(p.n, uint(i)) {
+			pair.first += c
 		} else {
-			pair.second = append(pair.second, c)
+			pair.second += c
 		}
 
 	}

@@ -16,13 +16,23 @@ type PartitionString struct {
 
 func (p PartitionString) Next() *Pair {
 	pair := new(Pair)
-	max := int(math.Pow(2, float64(len(p.seed)))) // should be done in "constructor"
+	stringLength := len(p.seed)
+	max := int(math.Pow(2, float64(stringLength))) // should be done in "constructor"
 	if p.n > max {
 		// need to check for off by one and other logic errors
 		return nil
 	}
 
 	// treat n as a binary number to decide which characters of seed are in first string of pair
+	for i := 0; i < stringLength; i++ {
+		c := p.seed[i]
+		if isBitSet(p.n, i) {
+			pair.first = append(pair.first, c)
+		} else {
+			pair.second = append(pair.second, c)
+		}
+
+	}
 
 	p.n++
 	return pair

@@ -2,6 +2,7 @@ package partitionString
 
 import (
 	"math"
+	"fmt"
 )
 
 type Pair struct {
@@ -26,15 +27,16 @@ func (p PartitionString) Next() *Pair {
 	// treat n as a binary number to decide which characters of seed are in first string of pair
 	for i := 0; i < stringLength; i++ {
 		c := string(p.seed[i])
+		fmt.Printf("i=%v n=%v\n", i, p.n)
 		if isBitSet(p.n, uint(i)) {
 			pair.first += c
 		} else {
 			pair.second += c
 		}
-
 	}
 
 	p.n++
+	fmt.Printf("inc n=%v\n", p.n)
 	return pair
 }
 

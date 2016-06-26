@@ -13,6 +13,13 @@ type PartitionString struct {
 	seed string
 }
 
+func NewPartitionString(s string) * PartitionString {
+	p := new(PartitionString)
+	p.n = 0;
+	p.seed = s
+	return p;
+}
+
 
 func (p * PartitionString) Next() *Pair {
 	pair := new(Pair)

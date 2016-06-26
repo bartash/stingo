@@ -6,13 +6,10 @@ import (
 )
 
 func TestPartitionString(t *testing.T) {
-	out := PartitionString{0, "and"}
-
-	pair := out.Next();
-	fmt.Printf("got pair '%v' & '%v'\n", pair.first, pair.second)
-
+	second := NewPartitionString("and")
+	pair := second.Next()
 	for pair != nil {
-		pair = out.Next();
+		pair = second.Next();
 		if pair != nil {
 			fmt.Printf("got pair '%v' & '%v'\n", pair.first, pair.second)
 		} else {

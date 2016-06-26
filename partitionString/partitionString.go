@@ -4,13 +4,13 @@ type Pair struct {
 	first, second string
 }
 
-type PartitionString int
-
-func NewPartitionString(s string) *PartitionString {
-	ps  := new(PartitionString);
-	return ps
+type PartitionString struct {
+	N int
+	S string
 }
 
-func next() *Pair {
+
+func (p PartitionString) Next() *Pair {
 	return new(Pair)
 }
+

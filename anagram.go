@@ -30,20 +30,9 @@ func main() {
 	target := strings.ToLower(flag.Arg(0))
 	sortedTarget := runesort.SortString(target)
 
-
-	file, err := os.Open("c:/cygwin64/usr/dict/words")
-	check(err)
-
-	scanner := bufio.NewScanner(file)
-	count := 0
 	sortToOriginal := make(map[string][]string)
-	for scanner.Scan() {
-		count++
-		text := scanner.Text()
-		sortedText := runesort.SortString(text)
-		sortToOriginal[sortedText] = append(sortToOriginal[sortedText], text)
-	}
-	check(scanner.Err())
+
+	count := addFileContents(sortToOriginal, "c:/cygwin64/usr/dict/words")
 
 	if *verbose {
 		fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
@@ -82,6 +71,23 @@ func main() {
 	for key, _ := range allAnswers {
 		fmt.Printf("%v %v\n", upperCaseName(key.First), upperCaseName(key.Second))
 	}
+}
+
+func addFileContents( hash map[string][]string, fileName string) int {
+	file, err := os.Open(fileName)
+	check(err)
+
+	scanner := bufio.NewScanner(file)
+	count := 0
+
+	for scanner.Scan() {
+		count++
+		text := scanner.Text()
+		sortedText := runesort.SortString(text)
+		hash[sortedText] = append(hash[sortedText], text)
+	}
+	check(scanner.Err())
+	return count
 }
 
 func upperCaseName(name string) string {

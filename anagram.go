@@ -24,6 +24,7 @@ func check(e error) {
 func main() {
 	verbose := flag.Bool("verbose", false, "print verbose output")
 	simple := flag.Bool("simple", false, "print simple angrams as well as pairs")
+	surnames := flag.Bool("surnames", false, "use long list of surnames")
 	flag.Parse()
 
 	if len(flag.Args()) < 1 {
@@ -40,7 +41,10 @@ func main() {
 	// urls from https://stackoverflow.com/questions/1803628/raw-list-of-person-names
 	count += addHttpContents(sortToOriginal, "http://deron.meranda.us/data/census-dist-male-first.txt")
 	count += addHttpContents(sortToOriginal, "http://deron.meranda.us/data/census-dist-female-first.txt")
-	count += addHttpContents(sortToOriginal, "http://www2.census.gov/topics/genealogy/1990surnames/dist.all.last")
+
+	if *surnames {
+		count += addHttpContents(sortToOriginal, "http://www2.census.gov/topics/genealogy/1990surnames/dist.all.last")
+	}
 
 	if *verbose {
 		fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))

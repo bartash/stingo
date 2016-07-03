@@ -39,6 +39,8 @@ func main() {
 
 	// urls from https://stackoverflow.com/questions/1803628/raw-list-of-person-names
 	count += addHttpContents(sortToOriginal, "http://deron.meranda.us/data/census-dist-male-first.txt")
+	count += addHttpContents(sortToOriginal, "http://deron.meranda.us/data/census-dist-female-first.txt")
+	count += addHttpContents(sortToOriginal, "http://www2.census.gov/topics/genealogy/1990surnames/dist.all.last")
 
 	if *verbose {
 		fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
@@ -93,8 +95,9 @@ func addHttpContents( hash map[string][]string, url string) int {
 		count++
 		text := scanner.Text()
 		words := strings.Fields(text)
-		sortedText := runesort.SortString(strings.ToLower(words[0]))
-		hash[sortedText] = append(hash[sortedText], text)
+		lower := strings.ToLower(words[0])
+		sortedText := runesort.SortString(lower)
+		hash[sortedText] = append(hash[sortedText], lower)
 	}
 	check(scanner.Err())
 	return count

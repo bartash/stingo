@@ -9,6 +9,9 @@ import (
 	"strings"
 	"flag"
 	"unicode"
+	"net/http"
+	"io/ioutil"
+	"bytes"
 )
 
 func check(e error) {
@@ -33,6 +36,9 @@ func main() {
 	sortToOriginal := make(map[string][]string)
 
 	count := addFileContents(sortToOriginal, "c:/cygwin64/usr/dict/words")
+
+	// urls from https://stackoverflow.com/questions/1803628/raw-list-of-person-names
+	count += addHttpContents(sortToOriginal, "http://deron.meranda.us/data/census-dist-male-first.txt")
 
 	if *verbose {
 		fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
@@ -72,6 +78,28 @@ func main() {
 		fmt.Printf("%v %v\n", upperCaseName(key.First), upperCaseName(key.Second))
 	}
 }
+
+func addHttpContents( hash map[string][]string, url string) int {
+	resp, err := http.Get(url)
+	check(err)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+
+	// FIXME remove duplicates
+	scanner := bufio.NewScanner(bytes.NewReader(body))
+	count := 0
+
+	for scanner.Scan() {
+		count++
+		text := scanner.Text()
+		words := strings.Fields(text)
+		sortedText := runesort.SortString(strings.ToLower(words[0]))
+		hash[sortedText] = append(hash[sortedText], text)
+	}
+	check(scanner.Err())
+	return count
+}
+
 
 func addFileContents( hash map[string][]string, fileName string) int {
 	file, err := os.Open(fileName)

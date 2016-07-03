@@ -7,6 +7,7 @@ import (
 	"github.com/bartash/stingo/partitionString"
 	"os"
 	"strings"
+	"flag"
 )
 
 func check(e error) {
@@ -17,12 +18,17 @@ func check(e error) {
 
 // find simple anagrams
 func main() {
-	if len(os.Args) < 2 {
+	verbose := flag.Bool("verbose", false, "print verbose output")
+	simple := flag.Bool("simple", false, "print simple angrams as well as pairs")
+	flag.Parse()
+
+	if len(flag.Args()) < 1 {
+		fmt.Printf("#args= %v\n", len(flag.Args()))
 		panic("usage: anagram word")
 	}
-	target := strings.ToLower(os.Args[1])
+	target := strings.ToLower(flag.Arg(0))
 	sortedTarget := runesort.SortString(target)
-	fmt.Printf("Anagrams of %v\n", target)
+
 
 	file, err := os.Open("c:/cygwin64/usr/dict/words")
 	check(err)
@@ -36,12 +42,18 @@ func main() {
 		sortedText := runesort.SortString(text)
 		sortToOriginal[sortedText] = append(sortToOriginal[sortedText], text)
 	}
-	fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
 	check(scanner.Err())
 
-	answers := sortToOriginal[sortedTarget]
-	for _, element := range answers {
-		fmt.Printf("answer: %v \n", element)
+	if *verbose {
+		fmt.Printf("Total number of strings was %v map contains %v\n", count, len(sortToOriginal))
+	}
+
+	if *simple {
+		fmt.Printf("Simple Anagrams of %v\n", target)
+		answers := sortToOriginal[sortedTarget]
+		for _, element := range answers {
+			fmt.Printf("answer: %v \n", element)
+		}
 	}
 
 	second := partitionString.NewPartitionString(target)

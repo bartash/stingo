@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"flag"
+	"unicode"
 )
 
 func check(e error) {
@@ -79,6 +80,13 @@ func main() {
 		pair = second.Next();
 	}
 	for key, _ := range allAnswers {
-		fmt.Printf("%v %v\n", key.First, key.Second)
+		fmt.Printf("%v %v\n", upperCaseName(key.First), upperCaseName(key.Second))
 	}
+}
+
+func upperCaseName(name string) string {
+	nameRune := []rune(name)
+	nameRune[0] = unicode.ToUpper(nameRune[0])
+	nameWithUpper := string(nameRune)
+	return nameWithUpper
 }

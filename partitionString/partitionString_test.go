@@ -9,12 +9,13 @@ func TestPartitionString(t *testing.T) {
 	partitionString := NewPartitionString("and")
 	expected := map[Pair]bool{
 		*NewPair("a", "nd"): true,
-		*NewPair("n", "ad"): true,
-		*NewPair("an", "d"): true,
-		*NewPair("ad", "n"): true,
 		*NewPair("nd", "a"): true,
+		*NewPair("n", "ad"): true,
+		*NewPair("ad", "n"): true,
+		*NewPair("an", "d"): true,
 		*NewPair("d", "an"): true,
 		*NewPair("and", ""): true,
+		*NewPair("", "and"): true,
 	}
 	fmt.Printf("length of expect = %d\n", len(expected))
 	for key, value := range expected {

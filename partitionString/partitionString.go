@@ -35,7 +35,7 @@ func (p * PartitionString) Next() *Pair {
 	stringLength := len(p.seed)
 
 	// fmt.Printf("max=%v n=%v\n", max, p.n)
-	if p.n >= p.max {
+	if p.n > p.max {
 		// need to check for off by one and other logic errors
 		return nil
 	}
